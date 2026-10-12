@@ -1,0 +1,773 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Axyntrax Industrial CMMS API",
+    "description": "Motor de Mantenimiento Predictivo, Horómetro Antifraude y OTs Certificadas.",
+    "version": "2.0.0"
+  },
+  "paths": {
+    "/health": {
+      "get": {
+        "tags": [
+          "Infraestructura"
+        ],
+        "summary": "Health Check",
+        "operationId": "health_check_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/": {
+      "get": {
+        "tags": [
+          "Interfaz Visual"
+        ],
+        "summary": "Get Dashboard",
+        "operationId": "get_dashboard__get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/dashboard": {
+      "get": {
+        "tags": [
+          "Interfaz Visual"
+        ],
+        "summary": "Get Dashboard",
+        "operationId": "get_dashboard_dashboard_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/horometer/record": {
+      "post": {
+        "tags": [
+          "Horómetro"
+        ],
+        "summary": "Record Horometer",
+        "operationId": "record_horometer_api_v1_horometer_record_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HorometerReading"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/equipment/{equipment_id}/maintenance-status": {
+      "get": {
+        "tags": [
+          "Mantenimiento"
+        ],
+        "summary": "Get Maintenance Status",
+        "operationId": "get_maintenance_status_api_v1_equipment__equipment_id__maintenance_status_get",
+        "parameters": [
+          {
+            "name": "equipment_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Equipment Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/fuel/record": {
+      "post": {
+        "tags": [
+          "Combustible"
+        ],
+        "summary": "Record Fuel",
+        "operationId": "record_fuel_api_v1_fuel_record_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FuelLog"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/work-orders/{order_id}/complete": {
+      "post": {
+        "tags": [
+          "Órdenes de Trabajo"
+        ],
+        "summary": "Complete Order",
+        "operationId": "complete_order_api_v1_work_orders__order_id__complete_post",
+        "parameters": [
+          {
+            "name": "order_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Order Id"
+            }
+          },
+          {
+            "name": "closing_horometer",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "title": "Closing Horometer"
+            }
+          },
+          {
+            "name": "signature_vector",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Signature Vector"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/sync/batch": {
+      "post": {
+        "tags": [
+          "Sincronización Offline"
+        ],
+        "summary": "Sync Batch",
+        "description": "Endpoint para sincronización en lote desde terminales móviles en campo sin señal.",
+        "operationId": "sync_batch_api_v1_sync_batch_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SyncBatchRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SyncBatchResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/equipment/{equipment_id}/kpis": {
+      "get": {
+        "tags": [
+          "Métricas y KPIs"
+        ],
+        "summary": "Get Equipment Kpis",
+        "description": "Retorna Disponibilidad Física, MTBF, MTTR y Costo por hora de operación ($/h).",
+        "operationId": "get_equipment_kpis_api_v1_equipment__equipment_id__kpis_get",
+        "parameters": [
+          {
+            "name": "equipment_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Equipment Id"
+            }
+          },
+          {
+            "name": "period_days",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 30,
+              "title": "Period Days"
+            }
+          },
+          {
+            "name": "fuel_cost_total",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "default": 0.0,
+              "title": "Fuel Cost Total"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/billing/culqi-webhook": {
+      "post": {
+        "tags": [
+          "Facturación SUNAT"
+        ],
+        "summary": "Culqi Webhook",
+        "description": "Webhook seguro de Culqi: emite la Factura Electrónica SUNAT con CDR y activa la licencia Axyntrax.",
+        "operationId": "culqi_webhook_api_v1_billing_culqi_webhook_post",
+        "parameters": [
+          {
+            "name": "x-culqi-signature",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "Firma criptográfica HMAC del webhook",
+              "title": "X-Culqi-Signature"
+            },
+            "description": "Firma criptográfica HMAC del webhook"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WebhookPaymentPayload"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "FuelLog": {
+        "properties": {
+          "equipment_id": {
+            "type": "string",
+            "title": "Equipment Id"
+          },
+          "company_id": {
+            "type": "string",
+            "title": "Company Id"
+          },
+          "liters_loaded": {
+            "type": "number",
+            "exclusiveMinimum": 0.0,
+            "title": "Liters Loaded"
+          },
+          "current_horometer": {
+            "type": "number",
+            "minimum": 0.0,
+            "title": "Current Horometer"
+          },
+          "fuel_cost_total": {
+            "type": "number",
+            "minimum": 0.0,
+            "title": "Fuel Cost Total"
+          },
+          "fuel_timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Fuel Timestamp"
+          },
+          "ticket_photo_hash": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ticket Photo Hash"
+          }
+        },
+        "type": "object",
+        "required": [
+          "equipment_id",
+          "company_id",
+          "liters_loaded",
+          "current_horometer",
+          "fuel_cost_total"
+        ],
+        "title": "FuelLog"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "HorometerReading": {
+        "properties": {
+          "equipment_id": {
+            "type": "string",
+            "title": "Equipment Id"
+          },
+          "company_id": {
+            "type": "string",
+            "title": "Company Id"
+          },
+          "operator_id": {
+            "type": "string",
+            "title": "Operator Id"
+          },
+          "reading_hours": {
+            "type": "number",
+            "minimum": 0.0,
+            "title": "Reading Hours"
+          },
+          "reading_timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Reading Timestamp"
+          },
+          "photo_hash": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Photo Hash",
+            "description": "SHA-256 de la fotografía del horómetro"
+          },
+          "gps_lat": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Gps Lat"
+          },
+          "gps_lng": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Gps Lng"
+          }
+        },
+        "type": "object",
+        "required": [
+          "equipment_id",
+          "company_id",
+          "operator_id",
+          "reading_hours"
+        ],
+        "title": "HorometerReading"
+      },
+      "OfflineAction": {
+        "properties": {
+          "action_id": {
+            "type": "string",
+            "title": "Action Id"
+          },
+          "action_type": {
+            "type": "string",
+            "title": "Action Type"
+          },
+          "company_id": {
+            "type": "string",
+            "title": "Company Id"
+          },
+          "equipment_id": {
+            "type": "string",
+            "title": "Equipment Id"
+          },
+          "payload": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Payload"
+          },
+          "client_timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Client Timestamp"
+          },
+          "device_id": {
+            "type": "string",
+            "title": "Device Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "action_id",
+          "action_type",
+          "company_id",
+          "equipment_id",
+          "payload",
+          "client_timestamp",
+          "device_id"
+        ],
+        "title": "OfflineAction"
+      },
+      "SyncActionResult": {
+        "properties": {
+          "action_id": {
+            "type": "string",
+            "title": "Action Id"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message"
+          },
+          "server_time": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Server Time"
+          }
+        },
+        "type": "object",
+        "required": [
+          "action_id",
+          "status",
+          "message"
+        ],
+        "title": "SyncActionResult"
+      },
+      "SyncBatchRequest": {
+        "properties": {
+          "company_id": {
+            "type": "string",
+            "title": "Company Id"
+          },
+          "device_id": {
+            "type": "string",
+            "title": "Device Id"
+          },
+          "actions": {
+            "items": {
+              "$ref": "#/components/schemas/OfflineAction"
+            },
+            "type": "array",
+            "title": "Actions"
+          }
+        },
+        "type": "object",
+        "required": [
+          "company_id",
+          "device_id",
+          "actions"
+        ],
+        "title": "SyncBatchRequest"
+      },
+      "SyncBatchResponse": {
+        "properties": {
+          "total_received": {
+            "type": "integer",
+            "title": "Total Received"
+          },
+          "applied_count": {
+            "type": "integer",
+            "title": "Applied Count"
+          },
+          "rejected_count": {
+            "type": "integer",
+            "title": "Rejected Count"
+          },
+          "results": {
+            "items": {
+              "$ref": "#/components/schemas/SyncActionResult"
+            },
+            "type": "array",
+            "title": "Results"
+          },
+          "server_state_delta": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Server State Delta"
+          }
+        },
+        "type": "object",
+        "required": [
+          "total_received",
+          "applied_count",
+          "rejected_count",
+          "results"
+        ],
+        "title": "SyncBatchResponse"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      },
+      "WebhookPaymentPayload": {
+        "properties": {
+          "event": {
+            "type": "string",
+            "title": "Event"
+          },
+          "company_id": {
+            "type": "string",
+            "title": "Company Id"
+          },
+          "company_ruc": {
+            "type": "string",
+            "title": "Company Ruc"
+          },
+          "customer_email": {
+            "type": "string",
+            "title": "Customer Email"
+          },
+          "plan_name": {
+            "type": "string",
+            "title": "Plan Name"
+          },
+          "amount_pen": {
+            "type": "number",
+            "title": "Amount Pen"
+          },
+          "currency": {
+            "type": "string",
+            "title": "Currency",
+            "default": "PEN"
+          },
+          "device_fingerprint": {
+            "type": "string",
+            "title": "Device Fingerprint"
+          },
+          "payment_method": {
+            "type": "string",
+            "title": "Payment Method"
+          },
+          "culqi_charge_id": {
+            "type": "string",
+            "title": "Culqi Charge Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "event",
+          "company_id",
+          "company_ruc",
+          "customer_email",
+          "plan_name",
+          "amount_pen",
+          "device_fingerprint",
+          "payment_method",
+          "culqi_charge_id"
+        ],
+        "title": "WebhookPaymentPayload"
+      }
+    }
+  }
+}

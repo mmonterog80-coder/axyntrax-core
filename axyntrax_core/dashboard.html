@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Axyntrax 2.0 — Centro de Control y Mantenimiento Industrial</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              orange: '#FF6B35',
+              dark: '#0B0F19',
+              card: '#111827',
+              border: '#1F2937',
+              success: '#10B981',
+              warning: '#F59E0B',
+              danger: '#EF4444'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;800&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0B0F19; }
+    .font-mono { font-family: 'JetBrains Mono', monospace; }
+  </style>
+</head>
+<body class="text-slate-100 min-h-screen flex flex-col">
+
+  <!-- TOP NAVIGATION -->
+  <header class="border-b border-brand-border bg-brand-dark/80 backdrop-blur sticky top-0 z-50 px-6 py-4 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <div class="w-9 h-9 rounded-xl bg-brand-orange flex items-center justify-center font-black text-black text-lg shadow-lg shadow-brand-orange/20">A</div>
+      <div>
+        <h1 class="text-lg font-black tracking-tight flex items-center gap-2">
+          AXYNTRAX <span class="text-brand-orange">2.0</span>
+          <span class="text-[10px] bg-brand-orange/10 text-brand-orange border border-brand-orange/30 px-2 py-0.5 rounded-full font-mono font-bold uppercase tracking-widest">Enterprise CMMS</span>
+        </h1>
+        <p class="text-xs text-slate-400">Consola de Mantenimiento Preventivo &amp; Telemetría Antifraude</p>
+      </div>
+    </div>
+    <div class="flex items-center gap-4">
+      <div class="flex items-center gap-2 bg-emerald-950/60 border border-emerald-500/30 px-3 py-1.5 rounded-lg text-xs font-mono text-emerald-400">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        API: OPERATIONAL (34 Tests OK)
+      </div>
+      <div class="flex items-center gap-2 bg-slate-900 border border-brand-border px-3 py-1.5 rounded-lg text-xs font-mono text-slate-300">
+        <span>Sincronización Offline:</span> <span class="text-brand-orange font-bold">Activa</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTAINER -->
+  <main class="flex-1 max-w-7xl w-full mx-auto p-6 space-y-6">
+
+    <!-- KPI ROW (ISO 14224 / SMRP) -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="bg-brand-card border border-brand-border rounded-2xl p-5 shadow-lg">
+        <div class="text-xs text-slate-400 font-mono uppercase tracking-wider mb-1">Disponibilidad Física</div>
+        <div class="flex items-baseline gap-2">
+          <span class="text-3xl font-extrabold text-emerald-400">95.56%</span>
+          <span class="text-xs text-emerald-500 font-semibold font-mono">▲ +1.8%</span>
+        </div>
+        <p class="text-[11px] text-slate-500 mt-2">Norma SMRP (32h parada / 720h periodo)</p>
+      </div>
+
+      <div class="bg-brand-card border border-brand-border rounded-2xl p-5 shadow-lg">
+        <div class="text-xs text-slate-400 font-mono uppercase tracking-wider mb-1">MTBF (Confiabilidad)</div>
+        <div class="flex items-baseline gap-2">
+          <span class="text-3xl font-extrabold text-slate-100">2,000<span class="text-lg text-slate-400 font-normal ml-1">h</span></span>
+        </div>
+        <p class="text-[11px] text-slate-500 mt-2">Tiempo medio entre fallas no programadas</p>
+      </div>
+
+      <div class="bg-brand-card border border-brand-border rounded-2xl p-5 shadow-lg">
+        <div class="text-xs text-slate-400 font-mono uppercase tracking-wider mb-1">MTTR (Tiempo Reparación)</div>
+        <div class="flex items-baseline gap-2">
+          <span class="text-3xl font-extrabold text-amber-400">14.0<span class="text-lg text-slate-400 font-normal ml-1">h</span></span>
+        </div>
+        <p class="text-[11px] text-slate-500 mt-2">Duración media de intervención correctiva</p>
+      </div>
+
+      <div class="bg-brand-card border border-brand-border rounded-2xl p-5 shadow-lg">
+        <div class="text-xs text-slate-400 font-mono uppercase tracking-wider mb-1">Costo Operativo Real</div>
+        <div class="flex items-baseline gap-2">
+          <span class="text-3xl font-extrabold text-brand-orange">S/ 2.85<span class="text-lg text-slate-400 font-normal ml-1">/h</span></span>
+        </div>
+        <p class="text-[11px] text-slate-500 mt-2">TCO por hora de motor trabajada</p>
+      </div>
+    </div>
+
+    <!-- MAIN TWO-COLUMN SECTION -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+      <!-- LEFT: FLEET STATUS (2 COLS) -->
+      <div class="lg:col-span-2 space-y-4">
+        <div class="flex items-center justify-between">
+          <h2 class="text-base font-bold text-slate-100 tracking-tight flex items-center gap-2">
+            <span>Flota Activa y Horómetros Antifraude</span>
+            <span class="text-xs bg-slate-800 text-slate-400 px-2 py-0.5 rounded-full font-mono">3 Unidades</span>
+          </h2>
+          <span class="text-xs text-slate-400 font-mono">Protección Jitter: ±0.05h</span>
+        </div>
+
+        <!-- ASSET CARD 1 -->
+        <div class="bg-brand-card border border-brand-border rounded-2xl p-5 space-y-4 hover:border-brand-orange/40 transition-colors">
+          <div class="flex items-start justify-between">
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="text-sm font-bold text-slate-100">Excavadora Caterpillar 320D</span>
+                <span class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-[10px] px-2 py-0.5 rounded font-mono font-bold">OPERATIVA</span>
+              </div>
+              <p class="text-xs text-slate-400 font-mono mt-0.5">SN: CAT-SN-8921 · Cantera Norte · Tanque: 400 L</p>
+            </div>
+            <div class="text-right">
+              <div class="text-xl font-black text-brand-orange font-mono">1,025.0 h</div>
+              <p class="text-[10px] text-slate-500 font-mono">Próximo PM: 1,250.0 h</p>
+            </div>
+          </div>
+
+          <!-- PROGRESS BAR -->
+          <div>
+            <div class="flex justify-between text-xs text-slate-400 font-mono mb-1.5">
+              <span>Ciclo PM1 (250 h): Faltan 225.0 h</span>
+              <span class="text-emerald-400 font-bold">10% del ciclo</span>
+            </div>
+            <div class="w-full h-2 rounded-full bg-slate-800 overflow-hidden">
+              <div class="h-full bg-emerald-500 rounded-full" style="width: 10%"></div>
+            </div>
+          </div>
+
+          <!-- OEM DETAILS -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 text-xs border-t border-brand-border/60">
+            <div>
+              <span class="text-slate-500">Pauta OEM:</span>
+              <p class="font-mono text-slate-300">Cat OMM SEBU8500 (DEO-ULS 15W-40)</p>
+            </div>
+            <div>
+              <span class="text-slate-500">Repuestos Cruzados:</span>
+              <p class="font-mono text-slate-300">1R-0739 ↔ Donaldson P551343</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ASSET CARD 2 -->
+        <div class="bg-brand-card border border-brand-border rounded-2xl p-5 space-y-4 hover:border-brand-orange/40 transition-colors">
+          <div class="flex items-start justify-between">
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="text-sm font-bold text-slate-100">Excavadora Komatsu PC200</span>
+                <span class="bg-amber-500/10 text-amber-400 border border-amber-500/30 text-[10px] px-2 py-0.5 rounded font-mono font-bold">ALERTA PREVENTIVA</span>
+              </div>
+              <p class="text-xs text-slate-400 font-mono mt-0.5">SN: KOM-PC200-341 · Frente 2 · Tanque: 400 L</p>
+            </div>
+            <div class="text-right">
+              <div class="text-xl font-black text-amber-400 font-mono">1,490.0 h</div>
+              <p class="text-[10px] text-amber-500 font-mono font-bold">Vence en 10.0 h (PM2)</p>
+            </div>
+          </div>
+
+          <!-- PROGRESS BAR -->
+          <div>
+            <div class="flex justify-between text-xs text-slate-400 font-mono mb-1.5">
+              <span>Ciclo PM2 (500 h): Faltan 10.0 h</span>
+              <span class="text-amber-400 font-bold">96% del ciclo</span>
+            </div>
+            <div class="w-full h-2 rounded-full bg-slate-800 overflow-hidden">
+              <div class="h-full bg-amber-400 rounded-full" style="width: 96%"></div>
+            </div>
+          </div>
+
+          <!-- OEM DETAILS -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 text-xs border-t border-brand-border/60">
+            <div>
+              <span class="text-slate-500">Pauta OEM:</span>
+              <p class="font-mono text-slate-300">Komatsu Shop Manual SEAM020</p>
+            </div>
+            <div>
+              <span class="text-slate-500">Filtro Requerido:</span>
+              <p class="font-mono text-slate-300">6736-51-5142 (Stock: 15 disp.)</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT: RECENT WORK ORDERS & AUDIT LOG (1 COL) -->
+      <div class="space-y-4">
+        <h2 class="text-base font-bold text-slate-100 tracking-tight">Órdenes de Trabajo &amp; Certificación</h2>
+
+        <div class="bg-brand-card border border-brand-border rounded-2xl p-5 space-y-4">
+          <div class="border-b border-brand-border pb-3">
+            <div class="flex items-center justify-between mb-1">
+              <span class="font-mono text-xs font-bold text-brand-orange">OT-2026-001</span>
+              <span class="bg-emerald-500/10 text-emerald-400 text-[10px] px-2 py-0.5 rounded font-mono font-bold">CERRADA</span>
+            </div>
+            <p class="text-xs font-semibold text-slate-200">Servicio PM1 (250 h) completado</p>
+            <p class="text-[11px] text-slate-400 mt-1">Horómetro de cierre: 1,026.0 h · Costo: S/ 95.00</p>
+          </div>
+
+          <div class="bg-slate-900/80 border border-brand-border rounded-xl p-3 space-y-2">
+            <div class="flex items-center justify-between text-[11px]">
+              <span class="text-slate-400">Firma Pericial:</span>
+              <span class="font-mono text-emerald-400 font-bold">SHA-256 Verificado</span>
+            </div>
+            <div class="flex items-center justify-between text-[11px]">
+              <span class="text-slate-400">Token QR SUNAFIL:</span>
+              <span class="font-mono text-slate-300 text-[10px] truncate max-w-[140px]">OT-2026-001|COMP...</span>
+            </div>
+            <div class="flex items-center justify-between text-[11px]">
+              <span class="text-slate-400">Factura SUNAT:</span>
+              <span class="font-mono text-brand-orange font-bold">F001-00000500 CDR OK</span>
+            </div>
+          </div>
+
+          <div class="pt-2">
+            <button class="w-full bg-brand-orange hover:bg-orange-600 text-black font-extrabold text-xs uppercase tracking-wider py-3 rounded-xl transition-all shadow-lg shadow-brand-orange/20">
+              Ver Certificado Pericial Completo
+            </button>
+          </div>
+        </div>
+
+        <!-- ANTI-TAMPER SECURITY BADGE -->
+        <div class="bg-slate-900/60 border border-brand-border rounded-2xl p-4 flex items-center gap-3">
+          <div class="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 font-bold text-sm">✓</div>
+          <div>
+            <h3 class="text-xs font-bold text-slate-200">Blindaje OWASP MASTG Activo</h3>
+            <p class="text-[11px] text-slate-400">Licencia Ed25519 · Cero booleanos vulnerables</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-brand-border bg-brand-dark px-6 py-4 text-center text-xs text-slate-500 font-mono">
+    Axyntrax 2.0 Industrial CMMS &copy; 2026 · Diseñado para Operaciones de Alto Rigor en Minería, Canteras y Construcción
+  </footer>
+
+</body>
+</html>
